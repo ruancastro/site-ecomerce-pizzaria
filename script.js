@@ -15,8 +15,14 @@ pizzaJson.map( (item,index)=> {  //mapeando JSON que contém cada pizza
 
     pizzaItem.querySelector('a'),addEventListener('click',(e)=>{  //na tag "a" (so tem uma) ouço o evento click e faço:
         e.preventDefault();  
+    
+       qs('.pizzaWindowArea').style.opacity = 0;
+       qs('.pizzaWindowArea').style.display = 'flex';  // existe a caixinha de compras q só ta com o display "none", eu 
+       //so troco seu estado com js
 
-       qs('.pizzaWindowArea').style.display = 'flex';  // existe a caixinha de compras q só ta com o display "none", eu so troco seu estado com js
+       setTimeout(()=> {
+           qs('.pizzaWindowArea').style.opacity = 1;  // setando o display da caixinha com opacidade 1  dps de 200ms
+       },200);
     });
 
    
