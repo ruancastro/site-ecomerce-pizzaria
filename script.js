@@ -1,3 +1,5 @@
+let modalQt = 1;
+
 const qs = (el)=> document.querySelector(el);
 const qsa = (el)=> document.querySelectorAll(el);
 
@@ -19,12 +21,27 @@ pizzaJson.map( (item,index)=> {  //mapeando JSON que contém cada pizza
         e.preventDefault();  
 
         let key = e.target.closest('.pizza-item').getAttribute('data-key'); // pegando o id da pizza quando clico nela
-        
-        // console.log(pizzaJson[key]);
+         // console.log(pizzaJson[key]);
+
+         modalQt = 1;
+
     
         qs('.pizzaBig img ').src = pizzaJson[key].img;
         qs('.pizzaInfo h1').innerHTML = pizzaJson[key].name;
         qs('.pizzaInfo--desc').innerHTML = pizzaJson[key].description;
+        qs('.pizzaInfo--actualPrice').innerHTML = `R$ ${pizzaJson[key].price.toFixed(2)}`;
+        qs('.pizzaInfo--size.selected').classList.remove('selected');
+
+
+        qsa('.pizzaInfo--size').forEach((size,sizeIndex)=> {
+            if(sizeIndex == 2){
+                size.classList.add('selected');  //sempre que eu abrir para escolher uma pizza sempre estará selecionada a grande
+            }  
+            size.querySelector('span').innerHTML = pizzaJson[key].sizes[sizeIndex];
+
+        });
+
+        qs('.pizzaInfo--qt').innerHTML = modalQt;
 
        qs('.pizzaWindowArea').style.opacity = 0;
        qs('.pizzaWindowArea').style.display = 'flex';  // existe a caixinha de compras q só ta com o display "none", eu 
