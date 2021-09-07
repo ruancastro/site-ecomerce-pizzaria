@@ -68,6 +68,27 @@ function closeModal() {  // função para fechar o modal
 
 }
 
-qsa('.pizzaInfo--cancelButton, .pizzaInfo--cancelMobileButton').forEach((item)=>{
+qsa('.pizzaInfo--cancelButton, .pizzaInfo--cancelMobileButton').forEach((item)=>{  //fazendo o botão cancelar (ou voltar no mobile) fechar o modal
     item.addEventListener('click',closeModal);
 });
+
+qs('.pizzaInfo--qtmais').addEventListener('click',()=>{  //habilitando o botão "+" do modal
+    modalQt++;
+    qs('.pizzaInfo--qt').innerHTML = modalQt;
+});
+
+qs('.pizzaInfo--qtmenos').addEventListener('click',()=>{ //habilitando o botão "-" do modal
+    if(modalQt>1){
+        modalQt--
+        qs('.pizzaInfo--qt').innerHTML = modalQt;
+    }  
+
+});
+
+qsa('.pizzaInfo--size').forEach((size,sizeIndex)=>{  // mudança do tamanho selecionado
+    size.addEventListener('click',(e)=>{
+        qs('.pizzaInfo--size.selected').classList.remove('selected');
+        size.classList.add('selected');
+    });
+});
+
