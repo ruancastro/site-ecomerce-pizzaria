@@ -22,9 +22,9 @@ pizzaJson.map( (item,index)=> {  //mapeando JSON que contém cada pizza
 
     pizzaItem.querySelector('a'),addEventListener('click',(e)=>{  //na tag "a" (so tem uma) ouço o evento click e faço:
         e.preventDefault();  
-
+        
         let key = e.target.closest('.pizza-item').getAttribute('data-key'); // pegando o id da pizza quando clico nela
-         // console.log(pizzaJson[key]);
+        // console.log(pizzaJson[key]);
         
         modalQt = 1;
         modalKey = key;
@@ -89,10 +89,12 @@ qs('.pizzaInfo--qtmenos').addEventListener('click',()=>{ //habilitando o botão 
 
 });
 
+
+
 qsa('.pizzaInfo--size').forEach((size,sizeIndex)=>{  // mudança do tamanho selecionado
     size.addEventListener('click',(e)=>{
         qs('.pizzaInfo--size.selected').classList.remove('selected');
-        size.classList.add('selected');
+        size.classList.add('selected'); 
     });
 });
 
@@ -104,11 +106,26 @@ qs('.pizzaInfo--addButton').addEventListener('click',()=>{
     let size = qs('.pizzaInfo--size.selected').getAttribute('data-key');
     // quantas pizzas? 
     console.log('quantidade: '+modalQt); */
-    cart.push({
-        id:pizzaJson[modalKey].id,   // qual a pizza? 
-        size,                        // qual o tamanho selecionado?
-        qt:modalQt                   // quantas pizzas? 
+    
+    let identifier = pizzaJson[modalKey].id+'@'+size;
+    
+    let key = cart.findIndex((item)=>{
+        return item.identifier == identifier
     });
 
+    if(key> -1){
+        cart[key].qt += modalQt;
+    } else {
+        cart.push({
+            identifier,
+            id:pizzaJson[modalKey].id,   // qual a pizza? 
+            size,                        // qual o tamanho selecionado?
+            qt:modalQt                   // quantas pizzas? 
+        });
+    
+    }
+
+
+ 
     closeModal();
 }); 
