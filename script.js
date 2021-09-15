@@ -134,11 +134,19 @@ function updateCart(){
     if(cart.length>0){
         qs('aside').classList.add('show');
         qs('.cart').innerHTML ='';
+
+
+        let subtotal = 0;
+        let desconto = 0;
+        let total = 0; 
+
         for(let i in cart){
             let pizzaItem = pizzaJson.find((item)=>{  // pegando no pizzaJson todo o objeto que 
                                                     // tem o id igual o id da pizza que adicionamos no carrinho
                 return item.id == cart[i].id                      
             });
+
+            subtotal += pizzaItem.price * cart[i].qt;
 
             let cartItem = qs('.models .cart--item').cloneNode(true);  //clonando a classe cart item 
 
@@ -162,11 +170,31 @@ function updateCart(){
             cartItem.querySelector('img').src = pizzaItem.img; //adicionando img no carrinho 
             cartItem.querySelector('.cart--item-nome').innerHTML = pizzaName; //adicionando o nome da pizza no carrinho
             cartItem.querySelector('.cart--item--qt').innerHTML = cart[i].qt; //adicionando a quantidade de pizzas de determinado tipo no carrinho
-
+            cartItem.querySelector('.cart--item-qtmenos').addEventListener('click',()=>{ //ativando o botão - do carrinho
+                if(cart[i].qt > 1){  
+                    cart[i].qt--;
+                } else {
+                    cart.splice(i,1);
+                }
+                
+                updateCart();
+            });
+            cartItem.querySelector('.cart--item-qtmais').addEventListener('click',()=>{  //ativando o botão + do carrinho
+                cart[i].qt++;
+                updateCart();
+            });
 
             qs('.cart').append(cartItem); 
         }
-    } else{
 
+
+        desconto = subtotal*0.1 ;
+        total = subtotal - desconto;
+        // mostrando o total, desconto e subtotal no carrinho
+        qs('.subtotal span:last-child').innerHTML = `R$ ${subtotal.toFixed(2)}`; 
+        qs('.desconto span:last-child').innerHTML = `R$ ${desconto.toFixed(2)}`;
+        qs('.total span:last-child').innerHTML = `R$ ${total.toFixed(2)}`;
+    } else{
+        qs('aside').classList.remove('show');
     }
 }
