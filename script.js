@@ -130,7 +130,22 @@ qs('.pizzaInfo--addButton').addEventListener('click',()=>{
     closeModal();
 }); 
 
+qs('.menu-openner').addEventListener('click',()=> { //abrir o carrinho qd clicado porem so se o mesmo tiver itens
+    if(cart.length > 0){
+        qs('aside').style.left = 0;
+    }   
+});
+
+qs('.menu-closer').addEventListener('click',()=> { //abrir o carrinho qd clicado porem so se o mesmo tiver itens
+        qs('aside').style.left = '100vw';     
+});
+
+
+
 function updateCart(){
+
+        qs('.menu-openner span').innerHTML = cart.length; // mudando o numero de itens no carrinho (mobile)
+
     if(cart.length>0){
         qs('aside').classList.add('show');
         qs('.cart').innerHTML ='';
@@ -195,6 +210,7 @@ function updateCart(){
         qs('.desconto span:last-child').innerHTML = `R$ ${desconto.toFixed(2)}`;
         qs('.total span:last-child').innerHTML = `R$ ${total.toFixed(2)}`;
     } else{
-        qs('aside').classList.remove('show');
+        qs('aside').classList.remove('show');  // quando não houver itens no carrinho, o mesmo fecha no desktop
+        qs('aside').style.left = '100vw'; // quando não houver itens no carrinho, o mesmo fecha no mobile
     }
 }
